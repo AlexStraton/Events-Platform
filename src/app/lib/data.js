@@ -6,7 +6,7 @@ export const users = [
       bio: "Music lover and event enthusiast",
       password: "hashedpassword123",
       email: "john@example.com",
-      avatar_img_url: "/avatars/john.jpg",
+      avatar_url: "/avatars/john.jpg",
       created_at: "2024-01-15T08:00:00Z"
     },
     {
@@ -15,7 +15,7 @@ export const users = [
       bio: "Tech enthusiast",
       password: "hashedpassword456",
       email: "jane@example.com",
-      avatar_img_url: "/avatars/jane.jpg",
+      avatar_url: "/avatars/jane.jpg",
       created_at: "2024-01-16T09:00:00Z"
     }
   ];
@@ -27,7 +27,7 @@ export const users = [
       bio: "Event coordinator with 5 years experience",
       password: "hashedpassword789",
       email: "alex@staff.com",
-      avatar_img_url: "/avatars/alex.jpg",
+      avatar_url: "/avatars/alex.jpg",
       created_at: "2024-01-01T10:00:00Z"
     },
     {
@@ -36,7 +36,7 @@ export const users = [
       bio: "Senior event manager",
       password: "hashedpassword101",
       email: "sarah@staff.com",
-      avatar_img_url: "/avatars/sarah.jpg",
+      avatar_url: "/avatars/sarah.jpg",
       created_at: "2024-01-02T11:00:00Z"
     }
   ];

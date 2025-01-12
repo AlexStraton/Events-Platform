@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  // Uses connection pooling
+  url       = env("POSTGRES_PRISMA_URL")
+  // Uses direct connection, ⚠️ make sure to keep this to `POSTGRES_URL_NON_POOLING`
+  // or you'll have dangling databases from migrations
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+// ALways uppercase for a model.
+// ALWAYS lowercase when using it in your queries.
+model Users {
+  id                 Int                  @id @default(autoincrement())
+  userName           String
+  bio                String?
+  email              String               @unique
+  avatar_image       String?
+  createdAt          DateTime             @default(now())
+  events             Events[]
+  EventRegistrations EventRegistrations[]
+}
+
+enum Category {
+  MUSIC
+  SPORTS
+  COMEDY
+  FOOD_AND_DRINK
+  CONFERENCE
+  NETWORKING
+  ART
+  EDUCATION
+  FILM
+  HEALTH_AND_WELLNESS
+  FUNDRAISER
+  GAMING
+  OUTDOOR_ADVENTURE
+  CULTURE
+  BUSINESS
+  TECH
+  OTHER
+}
+
+model Events {
+  id                 Int                  @id @default(autoincrement())
+  title              String
+  userId             Int
+  staffId            Int
+  image              String
+  description        String
+  eventDate          DateTime             @default(now())
+  price              Int
+  location           String
+  category           Category
+  capacity           Int
+  user               Users                @relation(fields: [userId], references: [id])
+  staff              Staff                @relation(fields: [staffId], references: [id])
+  EventRegistrations EventRegistrations[]
+}
+
+model Staff {
+  id             Int      @id @default(autoincrement())
+  username       String
+  bio            String?
+  password       String
+  email          String   @unique
+  avatar_img_url String?
+  createdAt      DateTime @default(now())
+  events         Events[]
+}
+
+enum RegistrationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model EventRegistrations {
+  id                    Int                @id @default(autoincrement())
+  eventId               Int
+  userId                Int
+  status                RegistrationStatus @default(PENDING)
+  googleCalendarEventId String?
+  createdAt             DateTime           @default(now())
+  event                 Events             @relation(fields: [eventId], references: [id])
+  user                  Users              @relation(fields: [userId], references: [id])
+  @@unique([eventId, userId])
+}
+
+//1. table models HERE
+// events
+//npx prima db push
+// eventsToUsers
