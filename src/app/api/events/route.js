@@ -1,17 +1,13 @@
-'use server';
-import { events } from '@/lib/data';
-import { NextResponse } from 'next/server';
+import { fetchEvents } from "@/app/queries/events";
 
-export async function getAllEvents() {
-    try {
-      return NextResponse.json(
-        { events, message: "Events fetched successfully" },
-        { status: 200 }
-      );
-    } catch (error) {
-      return NextResponse.json(
-        { message: 'Error fetching events' },
-        { status: 500 }
-      );
-    }
+
+export async function GET() {
+  try {
+    const events = await fetchEvents();
+    return new Response(JSON.stringify({ result: events }), { status: 200 });
+
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    throw error;
   }
+}

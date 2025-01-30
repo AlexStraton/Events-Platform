@@ -1,17 +1,24 @@
 "use client";
 import LoginForm from './LoginForm';
 import { useSession } from 'next-auth/react';
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
+import axios from 'axios';
 
 export default function LoginPage() {
+  const [events, setEvents] = useState([]);
   const { data: session, status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated") {
-      // For example, redirect them to the /events page (or wherever you like)
-      router.push("/home");
+      try{
+        axios.get('/api/events')
+           router.push("/home");
+
+      }catch(error) {
+        console.error("Error fetching events:", error);
+      }
     }
   }, [status, router]);
 
@@ -26,7 +33,7 @@ export default function LoginPage() {
 
             <p>Loading...</p>
           ) : session ? (
-            
+
             <p>You are signed in. Redirecting...</p>
           ) : (
 
