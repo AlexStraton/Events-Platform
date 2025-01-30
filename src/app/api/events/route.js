@@ -1,5 +1,5 @@
 'use server';
-import { events } from '@/app/lib/data';
+import { events } from '@/lib/data';
 import { NextResponse } from 'next/server';
 
 export async function getAllEvents() {

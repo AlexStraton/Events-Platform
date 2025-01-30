@@ -20,5 +20,5 @@ export const getUsers = async ( ) => {
         throw error
     }
   }
-// 2.
+
 

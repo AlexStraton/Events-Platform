@@ -12,18 +12,24 @@ export default function Header() {
     console.log(session);
 
     return (
-        <header>
-            <h1>Header</h1>
+        <header className="flex items-center justify-between bg-white p-4 shadow-md">
+            <h1 className="text-2xl font-bold text-gray-800">Events</h1>
 
-            <div>
+            <div className="flex items-center space-x-4">
                 { session ? (
                     <>
-                        <p> Signed in as {session.user.email} </p>
-                        <button onClick={() => signOut()}>Sign Out</button>
+                        <div className="text-sm text-gray-600">
+  <p>Signed in as</p>
+  <p className="font-semibold text-gray-800">{session.user.email}</p>
+</div>
+
+                        <button className="rounded bg-red-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-red-600" onClick={() => signOut()}>Sign Out</button>
                     </>
 
                 ) : (
-                    <button onClick={() => signIn("google")}> sign in </button>
+                    <button
+                    className="rounded bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600"
+                    onClick={() => signIn("google")}> sign in </button>
                  )}
 
 
