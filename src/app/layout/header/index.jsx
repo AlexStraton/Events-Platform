@@ -1,15 +1,21 @@
 'use client'
 import { signIn , signOut , useSession } from "next-auth/react"
-
-// token that persisted in the browser using a cookie.
-// that sits in local storage. whenever a new request is made
-//  to the server, the cookie is sent along with the request in the header.
-// there is a cookie id
+import { useRouter } from "next/navigation";
 
 export default function Header() {
     const {data: session} = useSession()
-
+    const router = useRouter();
     console.log(session);
+
+    const handleSignIn = async () => {
+        await signIn("google");
+        router.push("/home"); // Redirect to the home page after sign-in
+      };
+
+      // Redirect after sign out
+      const handleSignOut = async () => {
+        await signOut({ callbackUrl: "/login" }); // Redirect to the login page after sign-out
+      };
 
     return (
         <header className="flex items-center justify-between bg-white p-4 shadow-md">
@@ -23,13 +29,13 @@ export default function Header() {
   <p className="font-semibold text-gray-800">{session.user.email}</p>
 </div>
 
-                        <button className="rounded bg-red-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-red-600" onClick={() => signOut()}>Sign Out</button>
+                        <button className="rounded bg-red-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-red-600" onClick={handleSignOut}>Sign Out</button>
                     </>
 
                 ) : (
                     <button
                     className="rounded bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600"
-                    onClick={() => signIn("google")}> sign in </button>
+                    onClick={handleSignIn}> sign in </button>
                  )}
 
 
